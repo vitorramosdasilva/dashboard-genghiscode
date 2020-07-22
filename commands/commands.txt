@@ -29,6 +29,8 @@ pip3 install django-crispy-forms
 pip3 install dj-database-url
 pip3 install django-widget-tweaks
 
+pip3 freeze > requirements.txt
+
 ### Django ###
 # *.log
 # *.pot
