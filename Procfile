@@ -1,1 +1,1 @@
-web: gunicorn genghiscode.wsgi
+web: gunicorn my_proj.wsgi
