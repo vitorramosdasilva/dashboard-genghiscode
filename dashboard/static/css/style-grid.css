@@ -1,7 +1,7 @@
-/* *{
+ /* *{
     border:solid gainsboro 1px;
     
-} */
+}  */
 /* body{
     width: 98%;
     margin: 0 auto;
@@ -41,9 +41,11 @@
     'header	header header header header	header  header header' */
     'espace-header espace-header espace-header espace-header espace-header espace-header espace-header espace-header espace-header espace-header espace-header'
     'menu cx-5 cx-5 cx-5 cx-6 cx-6 cx-6 cx-6 cx-7 cx-7 cx-7'
-    'menu cx-8	cx-8 cx-8 cx-8 cx-8 cx-9 cx-9 cx-9 cx-9	cx-9'
+    'menu cx-8 cx-8 cx-8 cx-8 cx-8 cx-8 cx-8 cx-8 cx-8 cx-8'
+    'menu cx-9 cx-9 cx-9 cx-9 cx-9 cx-9 cx-9 cx-9 cx-9 cx-9'
     'menu cx-10 cx-10 cx-10 cx-10 cx-10 cx-10 cx-10 cx-10 cx-10 cx-10'
-    'menu cx-11 cx-11  cx-11 cx-11 cx-11 cx-12 cx-12 cx-12 cx-12 cx-12'
+    'menu cx-11 cx-11 cx-11 cx-11 cx-11 cx-11 cx-11 cx-11 cx-11 cx-11'
+    'menu cx-12 cx-12 cx-12 cx-12 cx-12 cx-12 cx-12 cx-12 cx-12 cx-12'
     'rodape rodape rodape rodape rodape	rodape  rodape rodape rodape rodape rodape'
     ;    
 
@@ -62,54 +64,64 @@
 .item4{
     height: 100%;
     border-radius: 7px;
+    border:solid 1px gainsboro;
     /* width: 90%; */
 }
 .item5{
     /* margin-left: 15%; */
-    border-radius: 2px;
+    border-radius: 7px;
     width:80%;
     height: 70px;
+    border:solid 1px gainsboro;
 }
 
 .item6{
-    border-radius: 2px;
+  border-radius: 7px;
     width: 80%;
     height: 70px;
+    border:solid 1px gainsboro;
 }
 
 .item7{
-    border-radius: 2px;
+  border-radius: 7px;
     width: 80%;
     height: 70px;
+    border:solid 1px gainsboro;
 }
 
 .item8{
-    border-radius: 2px;
-    height: 175px;    
+  border-radius: 7px;
+    height: 300px; 
     position: relative;
     overflow: hidden;
+    border:solid 1px gainsboro;
   
 }
 
 .item9{
-  border-radius: 2px;
+  border-radius: 7px;
   position: relative;
+  border:solid 1px gainsboro;
+  height: 300px;
   
 }
 
 .item10{
-    border-radius: 2px;
-    height:225px;
+    border-radius: 7px;
+    height: 300px;  
+    border:solid 1px gainsboro;
 }
 .item11{
-    border-radius: 2px;
-    height:275px;
+  border-radius: 7px;
+    height: 300px;  
     position: relative;
     overflow: hidden;
+    border:solid 1px gainsboro;
 }
 .item12{
-    border-radius: 2px;
-    height:275px;
+  border-radius: 7px;
+    height: 300px;  
+    border:solid 1px gainsboro;
     
 }
 
@@ -124,7 +136,7 @@ canvas {
 #rodape{
     background-color: black;
     color:white;
-    height:50px;
+    height:75px;
 }
 
 body {
@@ -159,113 +171,62 @@ body {
   .header li a {
     display: block;
     padding: 20px 20px;
-    border-right: 1px solid #f4f4f4;
     text-decoration: none;
   }
   
-  .header li a:hover,
+  /* .header li a:hover,
   .header .menu-btn:hover {
     background-color: #f4f4f4;
   }
+   */
   
-  .header .logo {
-    display: block;
-    float: left;
-    font-size: 2em;
-    padding: 10px 20px;
-    text-decoration: none;
-  }
-  
-  /* menu */
-  
-  .header .menu {
-    clear: both;
-    max-height: 0;
-    transition: max-height .2s ease-out;
-  }
-  
-  /* menu icon */
-  
-  .header .menu-icon {
-    cursor: pointer;
-    display: inline-block;
-    /* float: right; */
-    padding: 28px 20px;
-    position: relative;
-    user-select: none;
-  }
-  
-  .header .menu-icon .navicon {
-    background: #333;
-    display: block;
-    height: 2px;
-    position: relative;
-    transition: background .2s ease-out;
-    width: 18px;
-  }
-  
-  .header .menu-icon .navicon:before,
-  .header .menu-icon .navicon:after {
-    background: #333;
-    content: '';
-    display: block;
-    height: 100%;
-    position: absolute;
-    transition: all .2s ease-out;
-    width: 100%;
-  }
-  
-  .header .menu-icon .navicon:before {
-    top: 5px;
-  }
-  
-  .header .menu-icon .navicon:after {
-    top: -5px;
-  }
-  
-  /* menu btn */
-  
-  .header .menu-btn {
-    display: none;
-  }
-  
-  .header .menu-btn:checked ~ .menu {
-    max-height: 240px;
-  }
-  
-  .header .menu-btn:checked ~ .menu-icon .navicon {
-    background: transparent;
-  }
-  
-  .header .menu-btn:checked ~ .menu-icon .navicon:before {
-    transform: rotate(-45deg);
-  }
-  
-  .header .menu-btn:checked ~ .menu-icon .navicon:after {
-    transform: rotate(45deg);
-  }
-  
-  .header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
-  .header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
-    top: 0;
-  }
   
   /* 48em = 768px */
   
-  @media (min-width: 48em) {
-    .header li {
-      float: left;
-    }
-    .header li a {
-      padding: 20px 30px;
-    }
-    .header .menu {
-      clear: none;
-      float: right;
-      max-height: none;
-    }
-    .header .menu-icon {
-      display: none;
+  @media (max-width: 700px) {
+    .grid {
+      grid-template-areas:
+        'header header header'
+        'espace-header espace-header espace-header'
+        'menu menu menu'
+        'cx-5 cx-5 cx5'
+        'cx-6 cx-6 cx-6'
+        'cx-7 cx-7 cx-7'
+        'cx-8 cx-8 cx-8'
+        'cx-9 cx-9 cx-9'
+        'cx-10 cx-10 cx-10'
+        'cx-11 cx-11 cx-11'
+        'cx-12 cx-12 cx-12'
+        'rodape rodape rodape';
     }
   }
+
   
+  .navbar {
+    border:solid 1px gainsboro;
+    background-color: white;
+  }
+
+  #logo {
+    width: 75px;
+  }
+
+  .nav-item{
+    border-left:solid 1px gainsboro;
+    /* border-bottom:0.5px solid #F8F8FF;  */
+    padding-right:15px;
+    padding-left:15px; 
+    font-size:19px;
+  
+  }
+
+  .nav-item:hover{
+    background-color:#F8F8FF;
+    color:black;
+    
+  }
+
+.main-title{
+  padding: 5px 5px;
+  color:gray;
+}
