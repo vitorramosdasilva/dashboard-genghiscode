@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'q@hjlgs&_(s#z(7)4ibpm%0%3zs%31-)*mvyxh2_lt(9ftnx@3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dashboard',
+    'accounts',
+    'crispy_forms',
    
 ]
 
@@ -128,4 +130,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_UL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-mEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
