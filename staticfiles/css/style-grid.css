@@ -233,6 +233,12 @@ body {
   padding: 5px 5px;
   color:gray;
 }
+
+.auth-card {
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
 /*
 header{
 height: 25px;
