@@ -9,16 +9,11 @@ python3 manage.py migrate
 python3 manage.py makemigrations
 python manage.py migrate --fake-initial
 
-
-
 python3 manage.py collectstatic
-
 python3 manage.py runserver
-
 
 pip3 install psycopg2-binary
 pip3 install django-stdimage
-
 
 pip3 install whitenoise
 pip3 install gunicorn
@@ -37,4 +32,3 @@ pip3 freeze > requirements.txt
 # *.pyc
 # __pycache__/
 # local_settings.py
-
