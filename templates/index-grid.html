@@ -2,24 +2,24 @@
 {% block content %}
    <div class="grid-container">
 
-        <div class="item4">Categorias</div>
+        <div class="item4">Campanha</div>
         <div class="item5">item5</div>
         <div class="item6">item6</div>
         <div class="item7">item7</div>
        
         <div class="item8">
-            <div class="col-12"><h5 class="main-title">Nossas especialidades</h5></div>
-            <canvas id="grafico1" height="310"></canvas>
+<!--            <div class="col-12"><h5 class="main-title">Nossas especialidades</h5></div>-->
+            <canvas id="grafico1" height="310" data-url="{% url 'discagem-unicas' %}"></canvas>
         </div>
         
         <div class="item9">
-            <div class="col-12"><h5 class="main-title">Nossas especialidades</h5></div>            
-            <canvas id="grafico2" height="320"></canvas>
+<!--            <div class="col-12"><h5 class="main-title">Nossas especialidades</h5></div>            -->
+            <canvas id="grafico2" height="320" data-url="{% url 'discagem-tentativas' %}"></canvas>
         </div>
        
         <div class="item10">
-            <div class="col-12"><h5 class="main-title">Nossas especialidades</h5></div>
-            <canvas id="grafico3" height="360"></canvas>
+<!--            <div class="col-12"><h5 class="main-title">Nossas especialidades</h5></div>-->
+            <canvas id="grafico3" height="360" data-url="{% url 'discagem-acordos' %}"></canvas>
         </div>
         
         <div class="item11">

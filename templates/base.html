@@ -63,61 +63,115 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
   <script type="text/javascript">
-      $.get("{% url 'dados' %}", function(data){
-        var ctx = $("#grafico1")
-        /* .get(0)
-        .getContext("2d"); */
-        new Chart(ctx, {
-            type: 'line', data: data
-        });
+
+    $(function () {
+
+      var $populationChart = $("#grafico1");
+      $.ajax({
+        url: $populationChart.data("url"),
+        success: function (data) {
+
+          var ctx = $populationChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Discagem Unicas',
+                backgroundColor: 'blue',
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Discagem Unicas'
+              }
+            }
+          });
+
+        }
       });
 
-      $.get("{% url 'dados' %}", function(data){
-        var ctx = $("#grafico2")
-        /* .get(0)
-        .getContext("2d"); */
-        new Chart(ctx, {
-            type: 'bar', data: data
-        });
+    });
+
+       $(function () {
+
+      var $populationChart = $("#grafico2");
+      $.ajax({
+        url: $populationChart.data("url"),
+        success: function (data) {
+
+          var ctx = $populationChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Discagem Tentativas',
+                backgroundColor: 'blue',
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Discagem Tentativas'
+              }
+            }
+          });
+
+        }
       });
 
-       $.get("{% url 'dados' %}", function(data){
-        var ctx = $("#grafico3")
-        /* .get(0)
-        .getContext("2d"); */
-        new Chart(ctx, {
-            type: 'line', data: data
-        });
+    });
+
+
+      $(function () {
+
+      var $populationChart = $("#grafico3");
+      $.ajax({
+        url: $populationChart.data("url"),
+        success: function (data) {
+
+          var ctx = $populationChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Acordos',
+                backgroundColor: 'blue',
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Discagem Acordos'
+              }
+            }
+          });
+
+        }
       });
 
-       $.get("{% url 'dados' %}", function(data){
-        var ctx = $("#grafico4")
-        /* .get(0)
-        .getContext("2d"); */
-        new Chart(ctx, {
-            type: 'horizontalBar', data: data
-        });
-      });
-
-       $.get("{% url 'dados' %}", function(data){
-        var ctx = $("#grafico5")
-        /* .get(0)
-        .getContext("2d"); */
-        new Chart(ctx, {
-            type: 'pie', data: data,            
-        });
-      });
-
-      $.get("{% url 'dados' %}", function(data){
-        var ctx = $("#grafico3")
-        /* .get(0)
-        .getContext("2d"); */
-        new Chart(ctx, {
-            type: 'area', data: data,            
-        });
-      });
-     
-
+    });
 
   </script>
  
