@@ -1,3 +1,15 @@
+#### How to create a Django project
+mkdir django-quick-start && cd $_
+python3 -m venv venv
+source venv/bin/activate
+pip install django
+django-admin startproject django_quick_start .
+django-admin startapp my_first_app
+
+
+
+sudo apt-get remove “package-name”
+
 https://simpleisbetterthancomplex.com/tutorial/2016/07/26/how-to-reset-migrations.html
 --Migracao....
 python3 manage.py makemigrations
@@ -6,21 +18,20 @@ python3 manage.py migrate
 --Reset Banco de Dados:
 . Corrija alteração no banco de Dados ...
 . Delete Migrations .....
-python3 manage.py makemigrations
+python3 manage.py makemisgrations
 python manage.py migrate --fake-initial
 
 python3 manage.py collectstatic
 python3 manage.py runserver
 
+
 pip3 install psycopg2-binary
 pip3 install django-stdimage
-
 pip3 install whitenoise
 pip3 install gunicorn
 pip3 install django-heroku
 
 pip3 install django-crispy-forms
-
 pip3 install dj-database-url
 pip3 install django-widget-tweaks
 
@@ -32,3 +43,31 @@ pip3 freeze > requirements.txt
 # *.pyc
 # __pycache__/
 # local_settings.py
+
+
+# migrar dados local para Heroku ...
+PGUSER=root PGPASSWORD=root heroku pg:push postgres://localhost/blog  postgresql-trapezoidal-56012
+
+
+heroku addons:create heroku-postgresql:hobby-dev
+
+heroku run python manage.py migrate
+heroku run python manage.py createsuperuser
+
+git add --all .
+git commit -m "My Django Girls app, first commit"
+git push -u origin master
+
+.pythonanywhere.com/pages/API
+8ca824aaabbb6daf1408b9f74914abb3ea8b52cd
+heroku logs --tail
+
+# pip3.6 install --user django-ckeditor
+
+pip3.6 install --user pythonanywhere
+pa_autoconfigure_django.py https://github.com/vitorramosdasilva/Blog.git
+
+CKEDITOR_UPLOAD_PATH
+/home/VitorRamos/vitorramos.pythonanywhere.com/uploads/
+
+CKEDITOR_UPLOAD_PATH

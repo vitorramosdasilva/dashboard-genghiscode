@@ -50,8 +50,10 @@
 {% block content %}
 
 {% endblock %}
-    <div id="rodape" class="item13">rodapé</div>
-
+    <div id="rodape" class="item13">
+      <p class="m-0 text-center text-white">Copyright &copy; genghiscode 2020</p>
+    </div>
+      
     </div>
     <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
@@ -64,7 +66,7 @@
 
   <script type="text/javascript">
 
-    $(function () {
+     $(function () {
 
       var $populationChart = $("#grafico1");
       $.ajax({
@@ -74,12 +76,12 @@
           var ctx = $populationChart[0].getContext("2d");
 
           new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
               labels: data.labels,
               datasets: [{
-                label: 'Discagem Unicas',
-                backgroundColor: 'blue',
+                label: 'Discagem no Mês',
+                backgroundColor: '#3399ff',
                 data: data.data
               }]
             },
@@ -90,7 +92,7 @@
               },
               title: {
                 display: true,
-                text: 'Discagem Unicas'
+                text: 'Discagem Únicas'
               }
             }
           });
@@ -115,7 +117,7 @@
               labels: data.labels,
               datasets: [{
                 label: 'Discagem Tentativas',
-                backgroundColor: 'blue',
+                backgroundColor: '#b8dbff',
                 data: data.data
               }]
             },
@@ -152,7 +154,7 @@
               labels: data.labels,
               datasets: [{
                 label: 'Acordos',
-                backgroundColor: 'blue',
+                backgroundColor: '#8fc7ff',
                 data: data.data
               }]
             },
@@ -172,6 +174,81 @@
       });
 
     });
+
+
+     $(function () {
+
+      var $populationChart = $("#grafico4");
+      $.ajax({
+        url: $populationChart.data("url"),
+        success: function (data) {
+
+          var ctx = $populationChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Classificacão',
+                backgroundColor: ['#ebf5ff','#d6ebff','#b8dbff','#8fc7ff','#3399ff'], 
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Discagem Por Classificação'
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+
+$(function () {
+
+      var $populationChart = $("#grafico5");
+      $.ajax({
+        url: $populationChart.data("url"),
+        success: function (data) {
+
+          var ctx = $populationChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Maquina',
+                backgroundColor: '#d6ebff', 
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Discagem Máquina'
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+
+
 
   </script>
  

@@ -59,53 +59,67 @@ def discagem_acordos(request):
         'labels': labels,
         'data': data,
     })
+ 
 
+def discagem_classificacao_unicas(request):
+    labels = []
+    data = []
+
+    queryset = Discagem.objects.values('classificacao').annotate(discagem_total=Sum('unic')).order_by('classificacao')
+
+    for entry in queryset:
+        labels.append(entry['classificacao'])
+        data.append(entry['discagem_total'])
+
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })
+
+def discagem_maquinas(request):
+    labels = []
+    data = []
+
+    queryset = Discagem.objects.values('data').filter(classificacao='MAQUINA').annotate(discagem_total=Sum('unic')).order_by('data')
+
+    for entry in queryset:
+        labels.append(entry['data'])
+        data.append(entry['discagem_total'])
+
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })
+    
 # class DadosJSONView(BaseLineChartView):
-#
+
 #     def get_labels(self):
-#         """Retorna 12 labels para a representação do x"""
-#         labels = [
-#             "Janeiro",
-#             "Fevereiro",
-#             "Março",
-#             "Abril",
-#             "Maio",
-#             "Junho",
-#             "Julho",
-#             "Agosto",
-#             "Setembro",
-#             "Outubro",
-#             "Novembro",
-#             "Dezembro"
-#         ]
-#
+#         queryset = Discagem.objects.values('data').distinct().order_by('data')
+#         """Retorna 12 labels para a representação do x"""        
+#         labels(queryset)
+
 #         return labels
-#
+
 #     def get_providers(self):
+#         queryset = Discagem.objects.values('campanha').distinct().order_by('data')
 #         """Retorna os nomes dos datasets."""
-#         datasets = [
-#             "Programação para Leigos",
-#             "Algoritmos e Lógica de Programação",
-#             "Programação em C",
-#             "Programação em Java",
-#             "Programação em Python",
-#             "Banco de Dados"
-#         ]
+#         datasets(queryset)
 #         return datasets
-#
+
 #     def get_data(self):
 #         """
 #         Retorna 6 datasets para plotar o gráfico.
-#
+
 #         Cada linha representa um dataset.
 #         Cada coluna representa um label.
-#
+
 #         A quantidade de dados precisa ser igual aos datasets/labels
-#
+
 #         12 labels, então 12 colunas.
 #         6 datasets, então 6 linhas.
 #         """
-#         dados = []
+#         queryset = Discagem.objects.values('data', 'campanha').annotate(discagem_total=Sum('unic')).order_by('data', 'campanha')
+#         dados.append(queryset)
 #         for l in range(6):
 #             for c in range(12):
 #                 dado = [
