@@ -35,6 +35,7 @@ pip3 install django-crispy-forms
 pip3 install dj-database-url
 pip3 install django-widget-tweaks
 
+
 pip3 freeze > requirements.txt
 
 ### Django ###
@@ -46,7 +47,7 @@ pip3 freeze > requirements.txt
 
 
 # migrar dados local para Heroku ...
-PGUSER=root PGPASSWORD=root heroku pg:push postgres://localhost/blog  postgresql-trapezoidal-56012
+PGUSER=root PGPASSWORD=root heroku pg:push postgres://localhost/call_center  postgresql-acute-90100
 
 
 heroku addons:create heroku-postgresql:hobby-dev
