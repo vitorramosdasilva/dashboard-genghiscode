@@ -1,0 +1,13 @@
+{% extends "autentication.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<!--{{ new_user.first_name }}!-->
+<div class="m-5 pb-5 mh-100">
+  <h1>Bem Vindo  {{ request.session.name }} </h1>
+  <p>Sua conta esta criado com sucesso. Agora você pode acessar em <a href="{% url 'login' %}">Entrar</a>.</p>
+</div>
+<div class="m-5 pb-5 mh-100"></div>
+<div class="m-5 pb-5 mh-100"></div>
+{% endblock %}S

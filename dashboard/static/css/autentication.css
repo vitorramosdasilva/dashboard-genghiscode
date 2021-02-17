@@ -1,0 +1,288 @@
+/*
+*{
+    border:solid gainsboro 1px;
+    
+}*/
+
+/* body{
+    width: 98%;
+    margin: 0 auto;
+
+} */
+/* .item1 { grid-area: espaco; }
+.item2 { grid-area: header; }
+.item3 { grid-area: menu; }
+.item4 { grid-area: main; }
+.item5 { grid-area: footer; } */
+
+
+/* .item1   { grid-area: espace; }
+.item2   { grid-area: header; } 
+*/
+
+.item3   { grid-area: espace-header;}
+.item4   { grid-area: menu;}
+
+.item5   { grid-area: cx-5; }
+.item6   { grid-area: cx-6; }
+.item7   { grid-area: cx-7; }
+.item14  { grid-area: cx-14; }
+.item15  { grid-area: cx-15; }
+
+.item8   { grid-area: cx-8; }
+.item9   { grid-area: cx-9; }
+
+.item10  { grid-area: cx-10; }
+.item11  { grid-area: cx-11; }
+.item12  { grid-area: cx-12; }
+.item13  { grid-area: rodape; }
+
+
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    /* 'espace	espace espace espace espace	espace	espace espace'
+    'header	header header header header	header  header header' */
+    'espace-header espace-header espace-header espace-header espace-header espace-header espace-header espace-header espace-header espace-header espace-header'
+    'menu cx-5 cx-5 cx-6 cx-6 cx-7 cx-7 cx-14 cx-14 cx-15 cx-15'
+    'menu cx-8 cx-8 cx-8 cx-8 cx-8 cx-8 cx-8 cx-8 cx-8 cx-8'
+    'menu cx-9 cx-9 cx-9 cx-9 cx-9 cx-9 cx-9 cx-9 cx-9 cx-9'
+    'menu cx-10 cx-10 cx-10 cx-10 cx-10 cx-10 cx-10 cx-10 cx-10 cx-10'
+    'menu cx-11 cx-11 cx-11 cx-11 cx-11 cx-11 cx-11 cx-11 cx-11 cx-11'
+    'menu cx-12 cx-12 cx-12 cx-12 cx-12 cx-12 cx-12 cx-12 cx-12 cx-12'
+    'rodape rodape rodape rodape rodape	rodape  rodape rodape rodape rodape rodape'
+    ;    
+
+  grid-gap: 10px;
+  /* background-color: grey; */
+  padding: 10px;
+}
+
+.grid-container > div {
+  background-color: white;
+  text-align: center;
+  justify-content: space-between;
+  /* padding: 20px 0; */
+  /* font-size: 30px; */
+}
+.item4{
+    height: 100%;
+    border-radius: 7px;
+    border:solid 1px gainsboro;
+    /* width: 90%; */
+}
+.item5{
+    /* margin-left: 15%; */
+    border-radius: 7px;
+    width:80%;
+    height: 70px;
+    border:solid 1px gainsboro;
+}
+
+.item6{
+  border-radius: 7px;
+    width: 80%;
+    height: 70px;
+    border:solid 1px gainsboro;
+}
+
+.item7{
+  border-radius: 7px;
+    width: 80%;
+    height: 70px;
+    border:solid 1px gainsboro;
+}
+
+.item14{
+  border-radius: 7px;
+    width: 80%;
+    height: 70px;
+    border:solid 1px gainsboro;
+}
+
+.item15{
+  border-radius: 7px;
+    width: 80%;
+    height: 70px;
+    border:solid 1px gainsboro;
+}
+
+.item8{
+  border-radius: 7px;
+    height: 360px;
+    position: relative;
+    overflow: hidden;
+    border:solid 1px gainsboro;
+  
+}
+
+.item9{
+  border-radius: 7px;
+  position: relative;
+  border:solid 1px gainsboro;
+  height: 360px;
+  
+}
+
+.item10{
+    border-radius: 7px;
+    height: 360px;
+    border:solid 1px gainsboro;
+}
+.item11{
+  border-radius: 7px;
+    height: 380px;
+    position: relative;
+    overflow: hidden;
+    border:solid 1px gainsboro;
+}
+.item12{
+  border-radius: 7px;
+    height: 360px;
+    border:solid 1px gainsboro;
+    
+}
+
+canvas {
+  /* background: green; */
+  position: absolute;
+  height: 100%; 
+  width: 100%;
+ 
+}
+
+
+#rodape{
+    background-color: black;
+    color:white;
+    height:75px;
+    width: 102.1%;
+}
+
+
+body {
+    margin: 0;
+    font-family: Helvetica, sans-serif;
+    background-color: #f4f4f4;
+    width: 98%;
+  }
+  
+  a {
+    color: #000;
+  }
+  
+  /* header */
+  
+  .header {
+    background-color: #fff;
+    box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+    position: fixed;
+    width: 99%;
+    z-index: 3;
+
+  }
+  
+  .header ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    background-color: #fff;
+  }
+  
+  .header li a {
+    display: block;
+    padding: 20px 20px;
+    text-decoration: none;
+  }
+
+li.campanha{
+    list-style-type: none;
+}
+
+/*
+#rodape {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #00000;
+  color: white;
+  text-align: center;
+}
+*/
+
+
+
+  /* .header li a:hover,
+  .header .menu-btn:hover {
+    background-color: #f4f4f4;
+  }
+   */
+  
+  
+  /* 48em = 768px */
+  
+  @media (max-width: 700px) {
+    .grid {
+      grid-template-areas:
+        'header header header'
+        'espace-header espace-header espace-header'
+        'menu menu menu'
+        'cx-5 cx-5 cx5'
+        'cx-6 cx-6 cx-6'
+        'cx-7 cx-7 cx-7'
+        'cx-8 cx-8 cx-8'
+        'cx-9 cx-9 cx-9'
+        'cx-10 cx-10 cx-10'
+        'cx-11 cx-11 cx-11'
+        'cx-12 cx-12 cx-12'
+        'rodape rodape rodape';
+    }
+  }
+
+  
+  .navbar {
+    border:solid 1px gainsboro;
+    background-color: white;
+    /*height: 35px;*/
+
+  }
+
+  #logo {
+    width: 75px;
+  }
+
+  .nav-item{
+    border-left:solid 1px gainsboro;
+    /* border-bottom:0.5px solid #F8F8FF;  */
+    padding-right:15px;
+    padding-left:15px; 
+    font-size:15px;
+  
+  }
+
+.nav-item:hover{
+  background-color:#F8F8FF;
+  color:black;
+}
+
+.main-title{
+  padding: 5px 5px;
+  color:gray;
+}
+
+.auth-card {
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+/*
+header{
+height: 25px;
+}
+*/
+.error{
+    color:red
+ }

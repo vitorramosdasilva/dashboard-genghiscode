@@ -1,25 +1,52 @@
-{% extends  'base.html' %}
+{% extends  'autentication.html' %}
 {% load crispy_forms_tags %}
+{% load widget_tweaks %}
 
-{% block title %}<title>Registre-se para usar o To Do</title>{% endblock %}
+{% block title %}Registre-se{% endblock %}
+
 
 {% block content %}
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <div class="card  auth-card">
             <div class="card-body">
-                <h4 class="card-title text-center">Registre-se para usar o To Do</h4>
+                <h4 class="card-title text-center">Registre-se para usar o DashBoard</h4>
         
-                <form method="post">
+                <form id="form_login" method="post">
+
                     {% csrf_token %}
+
+                    {% for error in form.non_field_errors %}
+						<div class="alert alert-danger">{{ error }}</div>
+					{% endfor %}
+
                     <input type="hidden" name="next" value="{{ next }}">
-        
-                    {{ form|crispy }}
+
+                    <div class="form-group{% if form.username.errors %} has-error {% endif %}">
+                        <label for="{{ form.username.auto_id }}"> {{ form.username.label }}:</label>
+                        {% render_field form.username class="form-control" placeholder='Usuário' %}
+					</div>
+
+                    <div class="form-group{% if form.email.errors %} has-error  {% endif %}">
+                        <label for="{{ form.email.auto_id }}"> {{ form.email.label }}:</label>
+                        {% render_field form.email class="form-control" placeholder=form.email.label %}
+					</div>
+
+                    <div class="form-group{% if form.password.errors %} has-error  {% endif %}">
+                        <label for="{{ form.password.auto_id }}"> {{ form.password.label }}:</label>
+                        {% render_field form.password class="form-control" placeholder=form.password.label %}
+					</div>
+
+                    <div class="form-group{% if form.password2.errors %} has-error  {% endif %}">
+                        <label for="{{ form.password2.auto_id }}"> {{ form.password2.label }}:</label>
+                        {% render_field form.password2 class="form-control" placeholder=form.password2.label %}
+					</div>
 
                     <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+
                 </form>
 
-                <p class="change-form-p">Já possui uma conta? <a href="/accounts/login">Clique aqui!</a></p>
+                <p class="change-form-p">Já possui uma conta? <a href="{% url 'login' %}">Clique aqui!</a></p>
             </div>
         </div>
     </div>

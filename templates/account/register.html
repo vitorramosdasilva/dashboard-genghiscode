@@ -1,0 +1,37 @@
+{% extends  'autentication.html' %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block title %}Registre-se{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="card  auth-card" style="width: 30rem;">
+            <div class="card-body">
+                <h3 class="card-title text-center">Registre-se para usar o DashBoard</h3>
+
+                 <form id="form_login" method="post">
+
+                    {% csrf_token %}
+
+                    {% for error in form.non_field_errors %}
+						<div class="alert alert-danger">{{ error }}</div>
+					{% endfor %}
+
+                    <input type="hidden" name="next" value="{{ next }}">
+
+                    {{ user_form | crispy }}
+
+                    <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+
+                </form>
+
+
+
+                <p class="change-form-p">Já possui uma conta? <a href="{% url 'login' %}">Clique aqui!</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

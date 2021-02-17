@@ -3,8 +3,9 @@
 <html>
 <heady>
 <link rel="stylesheet" type="text/css" href="{% static 'css/style-grid.css' %}">
+<!--<link rel="stylesheet" type="text/css" href="{% static 'css/autentication.css' %}">-->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+<title>{% block title %}{% endblock %}</title>
 </heady>
 
 <body>
@@ -22,22 +23,22 @@
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/">Home
+                                <a class="nav-link" href="{% url 'dashboard:index' %}">Home
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li class="nav-item active">
-                            <a class="nav-link" href="#">Sobre</a>
+                            <a class="nav-link" href="{% url 'dashboard:sobre' %}">Sobre</a>
                                 <!-- <span class="sr-only">(current)</span>-->            
                             </li>
                            
                             {% if user.is_authenticated %}
                              <li class="nav-item active">
-                                <a class="nav-link" href="/accounts/logout">Logout</a>
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                               </li>
                               {% else %}
                               <li class="nav-item active">
-                                <a class="nav-link" href="/accounts/login">Login</a>
+                                <a class="nav-link" href="{% url 'login' %}">Login</a>
                               </li>
                              {% endif %}
                               
@@ -54,9 +55,10 @@
       <p class="m-0 text-center text-white">Copyright &copy; genghiscode 2020</p>
     </div>
       
-    </div>
+    <!--</div>-->
     <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
     <!-- Scripts (jQuery não pode ser o slim que vem do Boostrap) -->
@@ -64,23 +66,40 @@
  
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+        <!-- Inclusão do Plugin jQuery Validation-->
+  <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
+  <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+
+  <script src="{% static 'js/validacao.js' %}"></script>
   <script type="text/javascript">
 
-     $(function () {
+    $(document).ready(function() {
 
-      var $populationChart = $("#grafico1");
+      var radioValue = $("input[name='visao']:checked").val();
+        //alert('teste o meu: ' + radioValue);
+      if (! radioValue){
+              radioValue = 'tentativas';
+      }
+           
+
+     var $populationChart = $("#grafico1");
       $.ajax({
+         type:'get',
+         data: {
+          'visao': radioValue
+        },
         url: $populationChart.data("url"),
+
         success: function (data) {
 
           var ctx = $populationChart[0].getContext("2d");
 
           new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
               labels: data.labels,
               datasets: [{
-                label: 'Discagem no Mês',
+                label: 'Chamadas ' + radioValue,
                 backgroundColor: '#3399ff',
                 data: data.data
               }]
@@ -92,19 +111,94 @@
               },
               title: {
                 display: true,
-                text: 'Discagem Únicas'
+                text: 'Discagem Por Campanha'
               }
             }
           });
 
         }
       });
-
     });
 
-       $(function () {
+
+
+   $("input[type='button']").click(function(){
+
+        var checkedVal = [];
+        var radioValue = $("input[name='visao']:checked").val();
+        
+         if (! radioValue){
+                radioValue = 'tentativas';
+            }
+       
+        $('input[name="nome_campanha"]:checked').each(function(i){
+          checkedVal[i] = $(this).val();
+        });
+        
+            //checkedVal.push($(this).val());
+        var checkedValue = checkedVal.join(",");    
+            // checkedValue= this.value;              
+      
+   
+        var comboboxTipoCamp = $('#tipoCampanha').find(":selected").val();
+        //console.log(comboboxTipoCamp);
+        //alert(comboboxTipoCamp);
+
+     var $populationChart = $("#grafico1");
+      $.ajax({
+         type:'get',
+         data: {
+          'visao': radioValue,
+          'ck_campanha': checkedValue,
+          'tipo_campanha': comboboxTipoCamp
+        },
+        url: $populationChart.data("url"),
+
+        success: function (data) {
+
+          var ctx = $populationChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Chamadas ' + radioValue,
+                backgroundColor: '#3399ff',
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Discagem Por Campanha'
+              }
+            }
+          });
+
+        }
+      });
+    });
+
+
+          
+     
+// Grafico 2 .......................................................
+
+$(document).ready(function() {
+
+      var radioValue = $("input[name='visao']:checked").val();
+        //alert('teste o meu: ' + radioValue);
+        if (! radioValue){
+              radioValue = 'tentativas';
+          }
 
       var $populationChart = $("#grafico2");
+      
       $.ajax({
         url: $populationChart.data("url"),
         success: function (data) {
@@ -116,7 +210,7 @@
             data: {
               labels: data.labels,
               datasets: [{
-                label: 'Discagem Tentativas',
+                label: 'Chamadas ' + radioValue,
                 backgroundColor: '#b8dbff',
                 data: data.data
               }]
@@ -128,7 +222,7 @@
               },
               title: {
                 display: true,
-                text: 'Discagem Tentativas'
+                text: 'Discagem Mensal'
               }
             }
           });
@@ -139,8 +233,77 @@
     });
 
 
-      $(function () {
+ $("input[type='button']").click(function(){
 
+        var checkedVal = [];
+        var radioValue = $("input[name='visao']:checked").val();
+        
+         if (! radioValue){
+                radioValue = 'tentativas';
+            }
+       
+        $('input[name="nome_campanha"]:checked').each(function(i){
+          checkedVal[i] = $(this).val();
+        });
+        
+            //checkedVal.push($(this).val());
+        var checkedValue = checkedVal.join(",");    
+            // checkedValue= this.value;              
+      
+   
+        var comboboxTipoCamp = $('#tipoCampanha').find(":selected").val();
+        //console.log(comboboxTipoCamp);
+        //alert(comboboxTipoCamp);
+
+     var $populationChart = $("#grafico2");
+      $.ajax({
+         type:'get',
+         data: {
+          'visao': radioValue,
+          'ck_campanha': checkedValue,
+          'tipo_campanha': comboboxTipoCamp
+        },
+        url: $populationChart.data("url"),
+
+        success: function (data) {
+
+          var ctx = $populationChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Chamadas ' + radioValue,
+                backgroundColor: '#3399ff',
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Discagem Mês'
+              }
+            }
+          });
+
+        }
+      });
+    });
+
+
+// Grafico 3 .......................................................
+
+$(document).ready(function() {
+
+      var radioValue = $("input[name='visao']:checked").val();
+         if (! radioValue){
+                radioValue = 'tentativas';
+         }
       var $populationChart = $("#grafico3");
       $.ajax({
         url: $populationChart.data("url"),
@@ -153,7 +316,7 @@
             data: {
               labels: data.labels,
               datasets: [{
-                label: 'Acordos',
+                label: 'Chamadas ' + radioValue,
                 backgroundColor: '#8fc7ff',
                 data: data.data
               }]
@@ -176,7 +339,77 @@
     });
 
 
-     $(function () {
+     $("input[type='button']").click(function(){
+        
+        var checkedVal = [];
+        var radioValue = $("input[name='visao']:checked").val();
+        
+         if (! radioValue){
+                radioValue = 'tentativas';
+            }
+       
+        $('input[name="nome_campanha"]:checked').each(function(i){
+          checkedVal[i] = $(this).val();
+        });
+        
+            //checkedVal.push($(this).val());
+        var checkedValue = checkedVal.join(",");    
+            // checkedValue= this.value;              
+      
+   
+        var comboboxTipoCamp = $('#tipoCampanha').find(":selected").val();
+        //console.log(comboboxTipoCamp);
+        //alert(comboboxTipoCamp);
+
+     var $populationChart = $("#grafico3");
+      $.ajax({
+         type:'get',
+         data: {
+          'visao': radioValue,
+          'ck_campanha': checkedValue,
+          'tipo_campanha': comboboxTipoCamp
+        },
+        url: $populationChart.data("url"),
+
+        success: function (data) {
+
+          var ctx = $populationChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Chamadas ' + radioValue,
+                backgroundColor: '#8fc7ff',
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Discagem Acordos'
+              }
+            }
+          });
+
+        }
+      });
+});
+
+
+
+$(document).ready(function () {
+ 
+      var radioValue = $("input[name='visao']:checked").val();
+        //alert('teste o meu: ' + radioValue);
+        if (! radioValue){
+              radioValue = 'tentativas';
+          }
 
       var $populationChart = $("#grafico4");
       $.ajax({
@@ -190,7 +423,7 @@
             data: {
               labels: data.labels,
               datasets: [{
-                label: 'Classificacão',
+                label:  'Chamadas ' + radioValue,
                 backgroundColor: ['#ebf5ff','#d6ebff','#b8dbff','#8fc7ff','#3399ff'], 
                 data: data.data
               }]
@@ -212,10 +445,80 @@
 
     });
 
-$(function () {
+     $("input[type='button']").click(function(){
+        
+        var checkedVal = [];
+        var radioValue = $("input[name='visao']:checked").val();
+        
+         if (! radioValue){
+                radioValue = 'tentativas';
+            }
+       
+        $('input[name="nome_campanha"]:checked').each(function(i){
+          checkedVal[i] = $(this).val();
+        });
+        
+            //checkedVal.push($(this).val());
+        var checkedValue = checkedVal.join(",");    
+            // checkedValue= this.value;              
+      
+   
+        var comboboxTipoCamp = $('#tipoCampanha').find(":selected").val();
+        //console.log(comboboxTipoCamp);
+        //alert(comboboxTipoCamp);
+
+     var $populationChart = $("#grafico4");
+      $.ajax({
+         type:'get',
+         data: {
+          'visao': radioValue,
+          'ck_campanha': checkedValue,
+          'tipo_campanha': comboboxTipoCamp
+        },
+        url: $populationChart.data("url"),
+
+        success: function (data) {
+
+          var ctx = $populationChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Chamadas ' + radioValue,
+                backgroundColor: ['#ebf5ff','#d6ebff','#b8dbff','#8fc7ff','#3399ff'], 
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Discagem Por Classificação'
+              }
+            }
+          });
+
+        }
+      });
+});
+
+
+
+$(document).ready(function () {
+ 
+      var radioValue = $("input[name='visao']:checked").val();
+        //alert('teste o meu: ' + radioValue);
+        if (! radioValue){
+              radioValue = 'tentativas';
+          }
 
       var $populationChart = $("#grafico5");
-      $.ajax({
+      $.ajax({  
         url: $populationChart.data("url"),
         success: function (data) {
 
@@ -226,7 +529,7 @@ $(function () {
             data: {
               labels: data.labels,
               datasets: [{
-                label: 'Maquina',
+                label: 'Chamadas ' + radioValue,
                 backgroundColor: '#d6ebff', 
                 data: data.data
               }]
@@ -249,9 +552,356 @@ $(function () {
     });
 
 
+     $("input[type='button']").click(function(){
 
-  </script>
- 
+        var checkedVal = [];
+        var radioValue = $("input[name='visao']:checked").val();
+        
+         if (! radioValue){
+                radioValue = 'tentativas';
+            }
+       
+        $('input[name="nome_campanha"]:checked').each(function(i){
+          checkedVal[i] = $(this).val();
+        });
+        
+            //checkedVal.push($(this).val());
+        var checkedValue = checkedVal.join(",");    
+            // checkedValue= this.value;              
+      
+   
+        var comboboxTipoCamp = $('#tipoCampanha').find(":selected").val();
+        //console.log(comboboxTipoCamp);
+        //alert(comboboxTipoCamp);
+
+     var $populationChart = $("#grafico5");
+      $.ajax({
+         type:'get',
+         data: {
+          'visao': radioValue,
+          'ck_campanha': checkedValue,
+          'tipo_campanha': comboboxTipoCamp
+        },
+        url: $populationChart.data("url"),
+
+        success: function (data) {
+
+          var ctx = $populationChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Chamadas ' + radioValue,
+                backgroundColor: '#d6ebff',
+                data: data.data
+              }]
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Discagem Máquina'
+                            }
+            }
+          });
+
+        }
+      });
+});
+
+
+</script>
+
+<script type="text/javascript">
+
+// Alo com documento pronto...
+
+     $(document).ready(function() {
+    $.ajax({
+      url: 'total-alo/',
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+<!--        alert(data["data"]["alo"]);-->
+        console.log(data["data"]["alo"]);
+        $('#total_alo').html(data["data"]["alo"]);
+      }
+    });
+  });
+
+
+// Alo click button...
+
+    $("input[type='button']").click(function(){
+
+        var checkedVal = [];
+        var radioValue = $("input[name='visao']:checked").val();      
+
+        
+         if (! radioValue){
+                radioValue = 'tentativas';
+            }     
+       
+        $('input[name="nome_campanha"]:checked').each(function(i){
+          checkedVal[i] = $(this).val();
+        });
+        
+            //checkedVal.push($(this).val());
+        var checkedValue = checkedVal.join(",");    
+            // checkedValue= this.value;              
+      
+   
+        var comboboxTipoCamp = $('#tipoCampanha').find(":selected").val();
+        //console.log(comboboxTipoCamp);
+
+    $.ajax({
+      url: 'total-alo/',
+      type: 'get',
+<!--      dataType: 'json',-->
+        data: {
+         'visao': radioValue,
+         'ck_campanha': checkedValue,
+         'tipo_campanha': comboboxTipoCamp
+        },
+      success: function (data) {
+<!--        alert(data["data"]["alo"]);-->
+        console.log(data["data"]["alo"]);
+        $('#total_alo').html(data["data"]["alo"]);
+      }
+    });
+  });
+
+
+
+// Cpc com documento pronto...
+
+     $(document).ready(function() {
+    $.ajax({
+      url: 'total-cpc/',
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+<!--        alert(data["data"]["cpc"]);-->
+        console.log(data["data"]["cpc"]);
+        $('#total_cpc').html(data["data"]["cpc"]);
+      }
+    });
+  });
+
+
+// Alo click button...
+
+    $("input[type='button']").click(function(){
+      
+        var checkedVal = [];
+        var radioValue = $("input[name='visao']:checked").val();      
+
+        
+         if (! radioValue){
+                radioValue = 'tentativas';
+            }     
+       
+        $('input[name="nome_campanha"]:checked').each(function(i){
+          checkedVal[i] = $(this).val();
+        });
+        
+            //checkedVal.push($(this).val());
+        var checkedValue = checkedVal.join(",");    
+            // checkedValue= this.value;              
+      
+   
+        var comboboxTipoCamp = $('#tipoCampanha').find(":selected").val();
+
+    $.ajax({
+      url: 'total-cpc/',
+      type: 'get',
+<!--      dataType: 'json',-->
+        data: {
+         'visao': radioValue,
+         'ck_campanha': checkedValue,
+         'tipo_campanha': comboboxTipoCamp
+        },
+      success: function (data) {
+<!--        alert(data["data"]["cpc"]);-->
+        console.log(data["data"]["cpc"]);
+        $('#total_cpc').html(data["data"]["cpc"]);
+      }
+    });
+  });
+
+
+
+//Acordo Documento Pronto ...
+    $(document).ready(function() {
+    $.ajax({
+      url: 'total-acordo/',
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+<!--        alert(data["data"]["acordo"]);-->
+        console.log(data["data"]["acordo"]);
+        $('#total_acordo').html(data["data"]["acordo"]);
+      }
+    });
+  });
+
+
+//Acordo Click Button ...
+    $("input[type='button']").click(function(){
+       
+        var checkedVal = [];
+        var radioValue = $("input[name='visao']:checked").val();      
+
+        
+         if (! radioValue){
+                radioValue = 'tentativas';
+            }     
+       
+        $('input[name="nome_campanha"]:checked').each(function(i){
+          checkedVal[i] = $(this).val();
+        });
+        
+            //checkedVal.push($(this).val());
+        var checkedValue = checkedVal.join(",");    
+            // checkedValue= this.value;              
+      
+   
+        var comboboxTipoCamp = $('#tipoCampanha').find(":selected").val();
+
+    $.ajax({
+      url: 'total-acordo/',
+      type: 'get',
+<!--      dataType: 'json',-->
+        data: {
+        'visao': radioValue,
+         'ck_campanha': checkedValue,
+         'tipo_campanha': comboboxTipoCamp
+        },
+      success: function (data) {
+<!--        alert(data["data"]["acordo"]);-->
+        console.log(data["data"]["acordo"]);
+        $('#total_acordo').html(data["data"]["acordo"]);
+      }
+    });
+  });
+
+
+
+
+//Acordo-Cpc Documento Pronto...
+   $(document).ready(function() {
+    $.ajax({
+      url: 'acordo-cpc/',
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+<!--        alert(data["data"]);-->
+        console.log(data["data_acordo_cpc"]);
+        $('#acordo_cpc').html(data["data_acordo_cpc"]);
+      }
+    });
+  });
+
+
+
+  //Acordo-Cpc Click Button ...
+    $("input[type='button']").click(function(){
+
+        var checkedVal = [];
+        var radioValue = $("input[name='visao']:checked").val();      
+
+        
+         if (! radioValue){
+                radioValue = 'tentativas';
+            }     
+       
+        $('input[name="nome_campanha"]:checked').each(function(i){
+          checkedVal[i] = $(this).val();
+        });
+        
+            //checkedVal.push($(this).val());
+        var checkedValue = checkedVal.join(",");    
+            // checkedValue= this.value;              
+      
+   
+        var comboboxTipoCamp = $('#tipoCampanha').find(":selected").val();
+    $.ajax({
+      url: 'acordo-cpc/',
+      type: 'get',
+<!--      dataType: 'json',-->
+        data: {
+         'visao': radioValue,
+         'ck_campanha': checkedValue,
+         'tipo_campanha': comboboxTipoCamp
+        },
+      success: function (data) {
+<!--        alert(data["data_acordo_cpc"]);-->
+        console.log(data["data_acordo_cpc"]);
+        $('#acordo_cpc').html(data["data_acordo_cpc"]);
+      }
+    });
+  });
+
+
+//acordo-alo documento pronto...
+    $(document).ready(function() {
+    $.ajax({
+      url: 'acordo-alo/',
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+<!--        alert(data["data_acordo_alo"]);-->
+        console.log(data["data_acordo_alo"]);
+        $('#acordo_alo').html(data["data_acordo_alo"]);
+      }
+    });
+  });
+
+//acordo-alo click button...
+      $("input[type='button']").click(function(){
+        var checkedVal = [];
+        var radioValue = $("input[name='visao']:checked").val();      
+
+        
+         if (! radioValue){
+                radioValue = 'tentativas';
+            }     
+       
+        $('input[name="nome_campanha"]:checked').each(function(i){
+          checkedVal[i] = $(this).val();
+        });
+        
+            //checkedVal.push($(this).val());
+        var checkedValue = checkedVal.join(",");    
+            // checkedValue= this.value;              
+      
+   
+        var comboboxTipoCamp = $('#tipoCampanha').find(":selected").val();
+    $.ajax({
+      url: 'acordo-alo/',
+      type: 'get',
+<!--      dataType: 'json',-->
+        data: {
+         'visao': radioValue,
+         'ck_campanha': checkedValue,
+         'tipo_campanha': comboboxTipoCamp
+        },
+      success: function (data) {
+<!--        alert(data["data_acordo_alo"]);-->
+        console.log(data["data_acordo_alo"]);
+        $('#acordo_alo').html(data["data_acordo_alo"]);
+      }
+    });
+  });
+
+</script>
+
+
 </body>
 
 </html>

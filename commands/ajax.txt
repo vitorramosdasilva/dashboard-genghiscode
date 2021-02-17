@@ -1,0 +1,39 @@
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $("input[type='button']").click(function(){
+            var radioValue = $("input[name='visao']:checked").val();
+<!--            alert(radioValue);-->
+            if(radioValue){
+                $.ajax({
+                    url: 'ajax/visao/',
+                    data: {
+                      'visao': radioValue
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                      if (data.is_taken) {
+                        alert("A user with this username already exists.");
+                      }
+                    }
+                  });
+            }
+        });
+    });
+
+</script>
+
+gabriela
+jump label..
+
+     var visao ='tentativas';
+
+        if(document.getElementById('filtro').clicked == true){
+
+            $("input[type='button']").click(function(){
+              var radioValue = $("input[name='visao']:checked").val();
+              if(radioValue){
+                 visao = radioValue;
+              }
+            });
+
