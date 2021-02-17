@@ -1,8 +1,3 @@
-* {
-    border: 1px solid red;
-
-}
-
 body{
     width: 95%;
     margin: auto;
@@ -55,6 +50,9 @@ body{
 }
 
 
+ul.campanha{
+    list-style-type: none;
+}
 /* 
 @media screen and (min-width: 640px){
   .container .menu .charts1 .charts2 .flex-container {
@@ -62,8 +60,5 @@ body{
   }    
 }
  */
-.error{
-    color:red
- }
 
 
