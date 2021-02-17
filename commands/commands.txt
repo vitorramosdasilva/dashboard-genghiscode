@@ -46,7 +46,6 @@ python3 manage.py migrate
 --Reset Banco de Dados:
 . Corrija alteração no banco de Dados ...
 . Delete Migrations .....
-python3 manage.py makemisgrations
 python manage.py migrate --fake-initial
 
 python3 manage.py collectstatic
