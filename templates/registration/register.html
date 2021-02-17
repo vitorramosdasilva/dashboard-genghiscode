@@ -1,9 +1,6 @@
 {% extends  'autentication.html' %}
 {% load crispy_forms_tags %}
-
-
 {% block title %}Registre-se{% endblock %}
-
 
 {% block content %}
 <div class="row">
@@ -22,27 +19,6 @@
 
                     <input type="hidden" name="next" value="{{ next }}">
                      {{ form|crispy }}
-
-<!--                    <div class="form-group{% if form.username.errors %} has-error {% endif %}">-->
-<!--                        <label for="{{ form.username.auto_id }}"> {{ form.username.label }}:</label>-->
-<!--                        {% render_field form.username class="form-control" placeholder='Usuário' %}-->
-<!--					</div>-->
-
-<!--                    <div class="form-group{% if form.email.errors %} has-error  {% endif %}">-->
-<!--                        <label for="{{ form.email.auto_id }}"> {{ form.email.label }}:</label>-->
-<!--                        {% render_field form.email class="form-control" placeholder=form.email.label %}-->
-<!--					</div>-->
-
-<!--                    <div class="form-group{% if form.password.errors %} has-error  {% endif %}">-->
-<!--                        <label for="{{ form.password.auto_id }}"> {{ form.password.label }}:</label>-->
-<!--                        {% render_field form.password class="form-control" placeholder=form.password.label %}-->
-<!--					</div>-->
-
-<!--                    <div class="form-group{% if form.password2.errors %} has-error  {% endif %}">-->
-<!--                        <label for="{{ form.password2.auto_id }}"> {{ form.password2.label }}:</label>-->
-<!--                        {% render_field form.password2 class="form-control" placeholder=form.password2.label %}-->
-<!--					</div>-->
-
                     <button type="submit" class="btn btn-primary btn-block">Registrar</button>
 
                 </form>
