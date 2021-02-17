@@ -22,11 +22,6 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput
 )
 
-
-
-# query = CharField(widget=forms.TextInput(attrs={'placeholder':'Search..'}),
-#                   max_length=50, label='', required=False)
-
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Senha', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repita a senha', widget=forms.PasswordInput)
@@ -43,9 +38,10 @@ class UserRegistrationForm(forms.ModelForm):
         return cd['password2']
 
     def clean_email(self):
+       cd = self.cleaned_data
        email = self.cleaned_data.get('email')
        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError('E-mail Exists.')
+            raise forms.ValidationError('Um usuário com esse email já existe, recupere a senha')
        return cd['email']
 
 

@@ -1,40 +1,23 @@
 {% extends  'autentication.html' %}
 {% load crispy_forms_tags %}
-<!--{% load widget_tweaks %}-->
-
 {% block title %}Entrar{% endblock %}
 
 {% block content %}
-
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <div class="card  auth-card">
             <div class="card-body">
                 <h4 class="card-title text-center">Entrar no DashBoard</h4>
-        
-                <form id="form_login" method="post">
-                    {% csrf_token %}
-                    {% for error in form.non_field_errors %}
-						<div class="alert alert-danger">{{ error }}</div>
-					{% endfor %}
-                    <input type="hidden" name="next" value="{{ next }}">
-
-                    <div class="form-group{% if form.username.errors %} has-error {% endif %}">
-                        <label for="{{ form.username.auto_id }}"> {{ form.username.label }}:</label>
-                        {% render_field form.username class="form-control" placeholder='Usuário ou E-mail' %}
-					</div>
-
-                    <div class="form-group{% if form.password.errors %} has-error  {% endif %}">
-                        <label for="{{ form.password.auto_id }}"> {{ form.password.label }}:</label>
-                        {% render_field form.password class="form-control" placeholder=form.password.label %}
-					</div>
+                 <form id="form_login" method="post">
+                     {% csrf_token %}
+                     {{ form|crispy }}
+                      <input type="hidden" name="next" value="{{ next }}">
 
                     <button type="submit" class="btn btn-primary btn-block">Entrar</button>
                 </form>
-
+                </br>
                 <p class="change-form-p">Quer criar uma conta? <a href="{% url 'register' %}">Clique aqui!</a></p>
                 <p class="change-form-p">Esqueceu a senha? <a href="{% url 'password_reset' %}">Clique aqui!</a></p>
-
         </div>
       </div>
     </div>
@@ -43,4 +26,5 @@
 </br>
 </br>
 </br>
+
 {% endblock %}
