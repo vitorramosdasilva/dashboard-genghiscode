@@ -33,6 +33,7 @@ INTERNAL_IPS = ['127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'widget_tweaks',
     'chartjs',
     # 'bootstrap4',
     'django.contrib.admin',
@@ -45,7 +46,7 @@ INSTALLED_APPS = [
     'dashboard',
     'accounts',
     'crispy_forms',
-    'widget_tweaks',
+
    
 ]
 
