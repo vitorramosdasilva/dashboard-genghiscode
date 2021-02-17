@@ -1,37 +1,118 @@
 {% extends  'base.html' %}
+
+{% block title %}DashBoard{% endblock %}
 {% block content %}
+
    <div class="grid-container">
 
-        <div class="item4">Campanha</div>
-        <div class="item5">item5</div>
-        <div class="item6">item6</div>
-        <div class="item7">item7</div>
+        <div class="item4">
+
+            <!-- ajax aqui -->
+            <div class="item18">
+
+                    </br>
+                    <h5>Visão</h5>
+                    <p>Selecione a Visão:</p>
+
+                    <form method="get">
+                        {% csrf_token %}
+                        <input type="radio"  id="unic" name="visao" class="visao-radio" value="unic">
+                        <label for="unic">Unic</label><br>
+
+                        <input type="radio" id="tentativas" name="visao" class="visao-radio" value="tentativas">
+                        <label for="tentativas">Tentativas</label>
+
+<!--                        <p><input id="filtro" class="btn btn-primary" type="button" value="Filtrar"></p>-->
+                    </form>
+            </div>
+
+            <hr/>
+            <div class="item16">
+                <h5>Tipo Operacao:</h5>
+
+                <select style="width:auto" name="tipoCampanha" id="tipoCampanha">
+
+                         <option selected>Selecione</option>
+                    {% for t_camp in tipo_campanha %}
+                        {% ifequal t_camp.id selected_t_camp.id %}
+                            <option value="{{t_camp.id}}" selected="selected">TipoCampanha {{t_camp.id}}: {{t_camp.tipoCampanha}}</option>
+                        {% else %}
+                            <option value="{{t_camp.id}}">{{t_camp.tipoCampanha}}</option>
+                        {% endifequal %}
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <hr/>
+            <div class="item17">
+               <h5>Campanhas:</h5>
+                <ul>
+                    {% for nome_campanha in campanha %}
+                        <li class="campanha">
+                            <input type='checkbox' name='nome_campanha' value='{{nome_campanha.nome_campanha}}' id='{{nome_campanha.id}}'/>
+                            <span>
+                            <label class='list' for='{{nome_campanha.id}}'>{{nome_campanha.nome_campanha}}</label>
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+                    <hr/>
+                    <p><input id="filtro" class="btn btn-primary" type="button" value="Filtrar"></p>
+        </div>
+
+
+        <div class="item5">
+            <h6>Total Atendidas</h6>
+            <h4><div id="total_alo"></div></h4>
+        </div>
+
+        <div class="item6">
+            <h6>Total CPC</h6>
+            <h4><div id="total_cpc"></div></h4>
+<!--            {% for key,total_cpc in total_cpc.items %}{{ total_cpc}}{% endfor %}-->
+        </div>
+
+        <div class="item7">
+            <h6>Total Acordos</h6>
+            <h4><div id="total_acordo"></div></h4>
+        </div>
+
+        <div class="item14">
+            <h6> % Acordo / CPC </h6>
+            <h4><div id="acordo_cpc"></div></h4>
+        </div>
+
+         <div class="item15">
+            <h6> % CPC / Atendidas </h6>
+             <h4><div id="acordo_alo"></div></h4>
+         </div>
        
         <div class="item8">
-<!--            <div class="col-12"><h5 class="main-title">Nossas especialidades</h5></div>-->
-            <canvas id="grafico1" height="310" data-url="{% url 'discagem-unicas' %}"></canvas>
-            
+            <canvas id="grafico1" height="310" data-url="{% url 'dashboard:discagem-unicas' %}"></canvas>
         </div>
-        
+
+        <!--aqui-->
         <div class="item9">
-<!--            <div class="col-12"><h5 class="main-title">Nossas especialidades</h5></div>            -->
-            <canvas id="grafico2" height="320" data-url="{% url 'discagem-tentativas' %}"></canvas>
+            <canvas id="grafico2" height="320" data-url="{% url 'dashboard:discagem-tentativas' %}"></canvas>
         </div>
        
         <div class="item10">
-<!--            <div class="col-12"><h5 class="main-title">Nossas especialidades</h5></div>-->
-            <canvas id="grafico3" height="360" data-url="{% url 'discagem-acordos' %}"></canvas>
+
+            <canvas id="grafico3" height="360" data-url="{% url 'dashboard:discagem-acordos' %}"></canvas>
         </div>
         
         <div class="item11">
-            <!-- <div class="col-12"><h5 class="main-title">Nossas especialidades</h5></div> -->
-            <canvas id="grafico4" height="320" data-url="{% url 'classificacao-unicas' %}"></canvas>
+
+            <canvas id="grafico4" height="320" data-url="{% url 'dashboard:classificacao-unicas' %}"></canvas>
         </div>
         
        <div class="item12">
-            <!-- <div class="col-12"><h5 class="main-title">Nossas especialidades</h5></div> -->
-            <canvas id="grafico5" height="360" data-url="{% url 'discagem-maquinas' %}"></canvas>
+
+            <canvas id="grafico5" height="360" data-url="{% url 'dashboard:discagem-maquinas-unic' %}"></canvas>
+
         </div>
+
  {% endblock %}
-
-

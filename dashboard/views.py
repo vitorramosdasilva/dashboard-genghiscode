@@ -4,20 +4,176 @@ from chartjs.views.lines import BaseLineChartView
 from chartjs.views.columns import BaseColumnsHighChartsView
 from chartjs.views.pie import HighChartPieView, HighChartDonutView
 from django.shortcuts import render
-from .models import Discagem
+from .models import Discagem, Campanha, TipoCampanha
 from django.db.models import Sum
 from django.http import JsonResponse
+from django.db.models import F
+# from django.views.generic.base import View
+# from django.core import serializers
+from django.db.models import Q
+from django.db.models.expressions import RawSQL
 
 
 class IndexView(TemplateView):
-    template_name = 'index-grid.html'
+    template_name = "index-grid.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tipo_campanha'] = TipoCampanha.objects.values('tipoCampanha', 'id').order_by('id')
+        context['campanha'] = Campanha.objects.values('nome_campanha', 'id').order_by('id')
+        return context
 
 
-def discagem_unicas(request):
+# estou aqui ...
+def funcao_total_alo(request):
+
+    filtro_visao = request.GET.get('visao')
+    filtro_campanha = request.GET.get('ck_campanha')
+    filtro_id_tipo_campanha = request.GET.get('tipo_campanha')
+    # print(str(filtro_id_tipo_campanha))
+    q = Q()
+
+    if not filtro_visao:
+        filtro_visao = 'tentativas'
+    if filtro_campanha:
+        listCampanha = [str(ck_campanha) for ck_campanha in filtro_campanha.split(',')]
+        q &= Q(campanha__nome_campanha__in=listCampanha)
+    if filtro_id_tipo_campanha and str(filtro_id_tipo_campanha) != 'Selecione':
+        q &= Q(campanha__tipoCampanha=filtro_id_tipo_campanha)
+    if not q:
+        q &= Q(campanha__nome_campanha__contains='Banpara')
+
+    data = {
+        'data': Discagem.objects.filter(classificacao__in=['ALO', 'CPC', 'IMPRODUTIVO', 'ACORDO']).filter(q).aggregate(alo=Sum(filtro_visao))
+    }
+    return JsonResponse(data, safe=False)
+
+
+def funcao_total_cpc(request):
+
+    filtro_visao = request.GET.get('visao')
+    filtro_campanha = request.GET.get('ck_campanha')
+    filtro_id_tipo_campanha = request.GET.get('tipo_campanha')
+    # print(str(filtro_id_tipo_campanha))
+    q = Q()
+
+    if not filtro_visao:
+        filtro_visao = 'tentativas'
+    if filtro_campanha:
+        listCampanha = [str(ck_campanha) for ck_campanha in filtro_campanha.split(',')]
+        q &= Q(campanha__nome_campanha__in=listCampanha)
+    if filtro_id_tipo_campanha and str(filtro_id_tipo_campanha) != 'Selecione':
+        q &= Q(campanha__tipoCampanha=filtro_id_tipo_campanha)
+    if not q :
+        q &= Q ( campanha__nome_campanha__contains='Banpara' )
+
+    data = {
+        'data': Discagem.objects.filter(classificacao__in=['CPC', 'ACORDO']).filter(q).aggregate(cpc=Sum(filtro_visao))
+    }
+    return JsonResponse(data, safe=False)
+
+
+def funcao_total_acordo(request):
+
+    filtro_visao = request.GET.get('visao')
+    filtro_campanha = request.GET.get('ck_campanha')
+    filtro_id_tipo_campanha = request.GET.get('tipo_campanha')
+    # print(str(filtro_id_tipo_campanha))
+    q = Q()
+
+    if not filtro_visao:
+        filtro_visao = 'tentativas'
+    if filtro_campanha:
+        listCampanha = [str(ck_campanha) for ck_campanha in filtro_campanha.split(',')]
+        q &= Q(campanha__nome_campanha__in=listCampanha)
+    if filtro_id_tipo_campanha and str(filtro_id_tipo_campanha) != 'Selecione':
+        q &= Q(campanha__tipoCampanha=filtro_id_tipo_campanha)
+    if not q :
+        q &= Q ( campanha__nome_campanha__contains='Banpara' )
+
+    data = {
+        'data': Discagem.objects.filter(classificacao='ACORDO').filter(q).aggregate(acordo=Sum(filtro_visao))
+    }
+    return JsonResponse(data, safe=False)
+
+
+def funcao_acordo_cpc(request):
+
+    filtro_visao = request.GET.get('visao')
+    filtro_campanha = request.GET.get('ck_campanha')
+    filtro_id_tipo_campanha = request.GET.get('tipo_campanha')
+    # print(str(filtro_id_tipo_campanha))
+    q = Q()
+
+    if not filtro_visao:
+        filtro_visao = 'tentativas'
+    if filtro_campanha:
+        listCampanha = [str(ck_campanha) for ck_campanha in filtro_campanha.split(',')]
+        q &= Q(campanha__nome_campanha__in=listCampanha)
+    if filtro_id_tipo_campanha and str(filtro_id_tipo_campanha) != 'Selecione':
+        q &= Q(campanha__tipoCampanha=filtro_id_tipo_campanha)
+    if not q:
+        q &= Q(campanha__nome_campanha__contains='Banpara')
+
+    acordo = Discagem.objects.filter(classificacao='ACORDO').filter(q).aggregate(acordo=Sum(filtro_visao))
+    cpc = Discagem.objects.filter(classificacao__in=['CPC', 'ACORDO']).filter(q).aggregate(cpc=Sum(filtro_visao))
+    data = {
+        'data_acordo_cpc': round((float(acordo['acordo']) / float(cpc['cpc'])) * 100, 2)
+    }
+    return JsonResponse(data, safe=False)
+
+
+def funcao_acordo_alo(request):
+
+    filtro_visao = request.GET.get('visao')
+    filtro_campanha = request.GET.get('ck_campanha')
+    filtro_id_tipo_campanha = request.GET.get('tipo_campanha')
+    # print(str(filtro_id_tipo_campanha))
+    q = Q()
+
+    if not filtro_visao:
+        filtro_visao = 'tentativas'
+    if filtro_campanha:
+        listCampanha = [str(ck_campanha) for ck_campanha in filtro_campanha.split(',')]
+        q &= Q(campanha__nome_campanha__in=listCampanha)
+    if filtro_id_tipo_campanha and str(filtro_id_tipo_campanha) != 'Selecione':
+        q &= Q(campanha__tipoCampanha=filtro_id_tipo_campanha)
+    if not q:
+        q &= Q(campanha__nome_campanha__contains='Banpara')
+
+    cpc = Discagem.objects.filter(classificacao__in=['CPC', 'ACORDO']).filter(q).aggregate(cpc=Sum(filtro_visao))
+    atendidas = Discagem.objects.filter(classificacao__in=['ALO', 'CPC', 'IMPRODUTIVO', 'ACORDO']).filter(q).aggregate(atendidas=Sum(filtro_visao))
+    data = {
+        'data_acordo_alo': round((float(cpc['cpc']) / float(atendidas['atendidas'])) * 100, 2)
+    }
+    return JsonResponse(data, safe=False)
+
+# _______________________ Graficos:
+
+
+def discagem_tentativas(request):
     labels = []
     data = []
 
-    queryset = Discagem.objects.values('data').annotate(discagem_total=Sum('unic')).order_by('data')
+    filtro_visao = request.GET.get('visao')
+    filtro_campanha = request.GET.get('ck_campanha')
+    filtro_id_tipo_campanha = request.GET.get('tipo_campanha')
+    # print(str(filtro_id_tipo_campanha))
+    q = Q()
+    print('eu aqui :' + str(filtro_visao))
+
+    if not filtro_visao:
+        filtro_visao = 'tentativas'
+    if filtro_campanha:
+        listCampanha = [str(ck_campanha) for ck_campanha in filtro_campanha.split(',')]
+        q &= Q(campanha__nome_campanha__in=listCampanha)
+    if filtro_id_tipo_campanha and str(filtro_id_tipo_campanha) != 'Selecione':
+        q &= Q(campanha__tipoCampanha=filtro_id_tipo_campanha)
+    if not q:
+        q &= Q(campanha__nome_campanha__contains='Banpara')
+
+    queryset = Discagem.objects.values('data').annotate(discagem_total=Sum(filtro_visao)). \
+        order_by('data').filter(q)
 
     for entry in queryset:
         labels.append(entry['data'])
@@ -29,14 +185,33 @@ def discagem_unicas(request):
     })
 
 
-def discagem_tentativas(request):
+def discagem_unicas(request):
     labels = []
     data = []
 
-    queryset = Discagem.objects.values('data').annotate(discagem_total=Sum('tentativas')).order_by('data')
+    filtro_visao = request.GET.get('visao')
+    filtro_campanha = request.GET.get('ck_campanha')
+    filtro_id_tipo_campanha = request.GET.get('tipo_campanha')
+    # print(str(filtro_id_tipo_campanha))
+    q = Q()
 
+    if not filtro_visao:
+        filtro_visao = 'tentativas'
+    if filtro_campanha:
+        listCampanha = [str(ck_campanha) for ck_campanha in filtro_campanha.split(',')]
+        q &= Q(campanha__nome_campanha__in=listCampanha)
+    if filtro_id_tipo_campanha and str(filtro_id_tipo_campanha) != 'Selecione':
+        q &= Q(campanha__tipoCampanha=filtro_id_tipo_campanha)
+    if not q:
+        q &= Q(campanha__nome_campanha__contains='Banpara')
+
+    queryset = Discagem.objects.values('campanha__nome_campanha').\
+        annotate(discagem_total=Sum(filtro_visao)).\
+        order_by('campanha__nome_campanha').prefetch_related('campanha').filter(q)
+
+    # print(queryset.query)
     for entry in queryset:
-        labels.append(entry['data'])
+        labels.append(entry['campanha__nome_campanha'])
         data.append(entry['discagem_total'])
 
     return JsonResponse(data={
@@ -49,7 +224,24 @@ def discagem_acordos(request):
     labels = []
     data = []
 
-    queryset = Discagem.objects.values('data').filter(classificacao='ACORDO').annotate(discagem_total=Sum('unic')).order_by('data')
+    filtro_visao = request.GET.get('visao')
+    filtro_campanha = request.GET.get('ck_campanha')
+    filtro_id_tipo_campanha = request.GET.get('tipo_campanha')
+    # print(str(filtro_id_tipo_campanha))
+    q = Q()
+
+    if not filtro_visao:
+        filtro_visao = 'tentativas'
+    if filtro_campanha:
+        listCampanha = [str(ck_campanha) for ck_campanha in filtro_campanha.split(',')]
+        q &= Q(campanha__nome_campanha__in=listCampanha)
+    if filtro_id_tipo_campanha and str(filtro_id_tipo_campanha) != 'Selecione':
+        q &= Q(campanha__tipoCampanha=filtro_id_tipo_campanha)
+    if not q:
+        q &= Q(campanha__nome_campanha__contains='Banpara')
+
+    queryset = Discagem.objects.values('data').filter(classificacao='ACORDO').\
+        annotate(discagem_total=Sum(filtro_visao)).order_by('data').filter(q)
 
     for entry in queryset:
         labels.append(entry['data'])
@@ -59,28 +251,89 @@ def discagem_acordos(request):
         'labels': labels,
         'data': data,
     })
- 
+
 
 def discagem_classificacao_unicas(request):
+
     labels = []
     data = []
+    queryset = {}
 
-    queryset = Discagem.objects.values('classificacao').annotate(discagem_total=Sum('unic')).order_by('classificacao')
+    filtro_visao = request.GET.get('visao')
+    filtro_campanha = request.GET.get('ck_campanha')
+    filtro_id_tipo_campanha = request.GET.get('tipo_campanha')
+
+    print(str(filtro_id_tipo_campanha))
+    q = Q()
+
+    if not filtro_visao:
+        filtro_visao = 'tentativas'
+    if filtro_campanha:
+        listCampanha = [str(ck_campanha) for ck_campanha in filtro_campanha.split(',')]
+        q &= Q(campanha__nome_campanha__in=listCampanha)
+    if filtro_id_tipo_campanha and str(filtro_id_tipo_campanha) != 'Selecione':
+        q &= Q(campanha__tipoCampanha=filtro_id_tipo_campanha)
+    if not q:
+        q &= Q(campanha__nome_campanha__contains='Banpara')
+
+    cpc = Discagem.objects.values('classificacao').filter(classificacao__in=['CPC', 'ACORDO']).filter(q).aggregate(
+        discagem_total=Sum(filtro_visao))
+
+    atendidas = Discagem.objects.values('classificacao').filter(classificacao__in=['ALO', 'CPC', 'IMPRODUTIVO', 'ACORDO']).filter(q).aggregate(
+            discagem_total=Sum(filtro_visao))
+
+    improdutivo = Discagem.objects.values('classificacao').filter(classificacao__in=['IMPRODUTIVO']).filter(q).aggregate(discagem_total=Sum(filtro_visao))
+
+    acordo = Discagem.objects.values('classificacao').filter(classificacao__in=['ACORDO']).filter(q).aggregate(discagem_total=Sum(filtro_visao))
+    maquina = Discagem.objects.values('classificacao').filter(classificacao__in=['MAQUINA']).filter(q).aggregate(discagem_total=Sum(filtro_visao))
+
+    queryset['Cpc'] = cpc
+    queryset['Atendidas'] = atendidas
+    queryset['Improdutivo'] = improdutivo
+    queryset['Acordo'] = acordo
+    queryset['Maquina'] = maquina
+
+    # print(queryset)
 
     for entry in queryset:
-        labels.append(entry['classificacao'])
-        data.append(entry['discagem_total'])
+        labels.append(entry)
+
+    data.append(queryset['Cpc']['discagem_total'])
+    data.append(queryset['Atendidas']['discagem_total'])
+    data.append(queryset['Improdutivo']['discagem_total'])
+    data.append(queryset['Acordo']['discagem_total'])
+    data.append(queryset['Maquina']['discagem_total'])
 
     return JsonResponse(data={
         'labels': labels,
         'data': data,
     })
 
-def discagem_maquinas(request):
+
+def discagem_maquinas_tentativas(request):
     labels = []
     data = []
 
-    queryset = Discagem.objects.values('data').filter(classificacao='MAQUINA').annotate(discagem_total=Sum('unic')).order_by('data')
+    filtro_visao = request.GET.get('visao')
+    filtro_campanha = request.GET.get('ck_campanha')
+    filtro_id_tipo_campanha = request.GET.get('tipo_campanha')
+    # print(str(filtro_id_tipo_campanha))
+    q = Q()
+
+    if not filtro_visao:
+        filtro_visao = 'tentativas'
+    if filtro_campanha:
+        listCampanha = [str(ck_campanha) for ck_campanha in filtro_campanha.split(',')]
+        q &= Q(campanha__nome_campanha__in=listCampanha)
+    if filtro_id_tipo_campanha and str(filtro_id_tipo_campanha) != 'Selecione':
+        q &= Q(campanha__tipoCampanha=filtro_id_tipo_campanha)
+    if not q:
+        q &= Q(campanha__nome_campanha__contains='Banpara')
+
+    queryset = Discagem.objects.values('data').filter(classificacao='MAQUINA').\
+        annotate(discagem_total=Sum(filtro_visao)).order_by('data').filter(q)
+
+    print(queryset.query)
 
     for entry in queryset:
         labels.append(entry['data'])
@@ -90,51 +343,40 @@ def discagem_maquinas(request):
         'labels': labels,
         'data': data,
     })
-    
-# class DadosJSONView(BaseLineChartView):
 
-#     def get_labels(self):
-#         queryset = Discagem.objects.values('data').distinct().order_by('data')
-#         """Retorna 12 labels para a representação do x"""        
-#         labels(queryset)
 
-#         return labels
+def discagem_maquinas_unic(request):
+    labels = []
+    data = []
 
-#     def get_providers(self):
-#         queryset = Discagem.objects.values('campanha').distinct().order_by('data')
-#         """Retorna os nomes dos datasets."""
-#         datasets(queryset)
-#         return datasets
+    filtro_visao = request.GET.get('visao')
+    filtro_campanha = request.GET.get('ck_campanha')
+    filtro_id_tipo_campanha = request.GET.get('tipo_campanha')
+    # print(str(filtro_id_tipo_campanha))
+    q = Q()
 
-#     def get_data(self):
-#         """
-#         Retorna 6 datasets para plotar o gráfico.
+    if not filtro_visao:
+        filtro_visao = 'tentativas'
+    if filtro_campanha:
+        listCampanha = [str(ck_campanha) for ck_campanha in filtro_campanha.split(',')]
+        q &= Q(campanha__nome_campanha__in=listCampanha)
+    if filtro_id_tipo_campanha and str(filtro_id_tipo_campanha) != 'Selecione':
+        q &= Q(campanha__tipoCampanha=filtro_id_tipo_campanha)
+    if not q:
+        q &= Q(campanha__nome_campanha__contains='Banpara')
 
-#         Cada linha representa um dataset.
-#         Cada coluna representa um label.
+    queryset = Discagem.objects.values('data').filter(classificacao='MAQUINA').\
+        annotate(discagem_total=Sum(filtro_visao)).order_by('data').filter(q)
 
-#         A quantidade de dados precisa ser igual aos datasets/labels
+    for entry in queryset:
+        labels.append(entry['data'])
+        data.append(entry['discagem_total'])
 
-#         12 labels, então 12 colunas.
-#         6 datasets, então 6 linhas.
-#         """
-#         queryset = Discagem.objects.values('data', 'campanha').annotate(discagem_total=Sum('unic')).order_by('data', 'campanha')
-#         dados.append(queryset)
-#         for l in range(6):
-#             for c in range(12):
-#                 dado = [
-#                     randint(1, 100),  # jan
-#                     randint(1, 100),  # fev
-#                     randint(1, 100),  # mar
-#                     randint(1, 100),  # abr
-#                     randint(1, 100),  # mai
-#                     randint(1, 100),  # jun
-#                     randint(1, 100),  # jul
-#                     randint(1, 100),  # ago
-#                     randint(1, 100),  # set
-#                     randint(1, 100),  # out
-#                     randint(1, 100),  # nov
-#                     randint(1, 100)   # dez
-#                 ]
-#             dados.append(dado)
-#         return dados
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })
+
+
+class SobreView(TemplateView):
+    template_name = "sobre.html"

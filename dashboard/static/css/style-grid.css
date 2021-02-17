@@ -1,7 +1,8 @@
- /* *{
+/**{
     border:solid gainsboro 1px;
     
-}  */
+}*/
+
 /* body{
     width: 98%;
     margin: 0 auto;
@@ -24,6 +25,8 @@
 .item5   { grid-area: cx-5; }
 .item6   { grid-area: cx-6; }
 .item7   { grid-area: cx-7; }
+.item14  { grid-area: cx-14; }
+.item15  { grid-area: cx-15; }
 
 .item8   { grid-area: cx-8; }
 .item9   { grid-area: cx-9; }
@@ -34,13 +37,14 @@
 .item13  { grid-area: rodape; }
 
 
+
 .grid-container {
   display: grid;
   grid-template-areas:
     /* 'espace	espace espace espace espace	espace	espace espace'
     'header	header header header header	header  header header' */
     'espace-header espace-header espace-header espace-header espace-header espace-header espace-header espace-header espace-header espace-header espace-header'
-    'menu cx-5 cx-5 cx-5 cx-6 cx-6 cx-6 cx-6 cx-7 cx-7 cx-7'
+    'menu cx-5 cx-5 cx-6 cx-6 cx-7 cx-7 cx-14 cx-14 cx-15 cx-15'
     'menu cx-8 cx-8 cx-8 cx-8 cx-8 cx-8 cx-8 cx-8 cx-8 cx-8'
     'menu cx-9 cx-9 cx-9 cx-9 cx-9 cx-9 cx-9 cx-9 cx-9 cx-9'
     'menu cx-10 cx-10 cx-10 cx-10 cx-10 cx-10 cx-10 cx-10 cx-10 cx-10'
@@ -83,6 +87,20 @@
 }
 
 .item7{
+  border-radius: 7px;
+    width: 80%;
+    height: 70px;
+    border:solid 1px gainsboro;
+}
+
+.item14{
+  border-radius: 7px;
+    width: 80%;
+    height: 70px;
+    border:solid 1px gainsboro;
+}
+
+.item15{
   border-radius: 7px;
     width: 80%;
     height: 70px;
@@ -137,6 +155,7 @@ canvas {
     background-color: black;
     color:white;
     height:75px;
+    width: 100%;
 }
 
 body {
@@ -174,6 +193,12 @@ body {
     padding: 20px 20px;
     text-decoration: none;
   }
+
+li.campanha{
+    list-style-type: none;
+}
+
+
   
   /* .header li a:hover,
   .header .menu-btn:hover {

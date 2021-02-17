@@ -1,0 +1,42 @@
+.quatro ou 5 blocos - feito
+.% acordo / alo
+.% acordo / cpc
+Erro Migrate ....
+.filtro campanha
+.tipo_operacao =  filtro
+.validar e funfar login
+
+
+# if settings.DEBUG:
+#     import debug_toolbar
+#     urlpatterns = [
+#         re_path(r'^__debug__/', include(debug_toolbar.urls)),
+#     ] + urlpatterns
+#     SHOW_TOOLBAR_CALLBACK = True
+
+    # 'debug_toolbar',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+
+
+.password_reset_complete
+.password_reset_confirm
+
+1 # Erro: Reverse for 'index' not found. 'index' is not a valid view function or pattern name. (feito)..
+2 # replicar filtro.. (feito) ..
+3 # vincular usuário a uma operação
+4 # cadastro operacao mercantil (feito)
+5 # importar cvs mercantil (feito)
+6 # Msg Erro de senha e passowrd (ja tenho pronto)... (feito)
+7 # Header outros filtros... (feito)
+8 # Messagem erro cadastro - registre -se .. (feito)
+10 # grafico pizza funil... .. (feito)
+11 # Email exists error não poder gravar...
+
+12 - nova branch hgit hub
+13 - deploy heroku ..
+12 # primeiro request venha seleciona a primeira operacao ...
+
+13 # tdd ...
+

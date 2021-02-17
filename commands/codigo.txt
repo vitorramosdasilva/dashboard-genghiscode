@@ -1,0 +1,46 @@
+from dashboard.models import Discagem,Campanha
+
+
+-- Table: public.dashboard_discagem_id_campanha
+
+-- DROP TABLE public.dashboard_discagem_id_campanha;
+
+CREATE TABLE public.dashboard_discagem_id_campanha
+(
+    id integer NOT NULL DEFAULT nextval('dashboard_discagem_id_campanha_id_seq'::regclass),
+    discagem_id integer NOT NULL,
+    campanha_id integer NOT NULL,
+    CONSTRAINT dashboard_discagem_id_campanha_pkey PRIMARY KEY (id),
+    CONSTRAINT dashboard_discagem_id_ca_discagem_id_campanha_id_af2bfcdc_uniq UNIQUE (discagem_id, campanha_id),
+    CONSTRAINT dashboard_discagem_i_campanha_id_11608c4b_fk_dashboard FOREIGN KEY (campanha_id)
+        REFERENCES public.dashboard_campanha (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT dashboard_discagem_i_discagem_id_2aa6b032_fk_dashboard FOREIGN KEY (discagem_id)
+        REFERENCES public.dashboard_discagem (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        DEFERRABLE INITIALLY DEFERRED
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.dashboard_discagem_id_campanha
+    OWNER to root;
+-- Index: dashboard_discagem_id_campanha_campanha_id_11608c4b
+
+-- DROP INDEX public.dashboard_discagem_id_campanha_campanha_id_11608c4b;
+
+CREATE INDEX dashboard_discagem_id_campanha_campanha_id_11608c4b
+    ON public.dashboard_discagem_id_campanha USING btree
+    (campanha_id ASC NULLS LAST)
+    TABLESPACE pg_default;
+-- Index: dashboard_discagem_id_campanha_discagem_id_2aa6b032
+
+-- DROP INDEX public.dashboard_discagem_id_campanha_discagem_id_2aa6b032;
+
+CREATE INDEX dashboard_discagem_id_campanha_discagem_id_2aa6b032
+    ON public.dashboard_discagem_id_campanha USING btree
+    (discagem_id ASC NULLS LAST)
+    TABLESPACE pg_default;
