@@ -1,3 +1,29 @@
+##  Deploy Heroku
+# settings = False
+
+pip3 freeze > requirements.txt
+python3 manage.py collectstatic
+heroku pg:reset # resetar o banco de dados ...
+
+# migrar dados local para Heroku ...
+PGUSER=root PGPASSWORD=root heroku pg:push postgres://localhost/call_center  postgresql-acute-90100
+
+# Migracoes Models ....
+heroku run python manage.py makemigrations
+heroku run python manage.py migrate
+heroku run python manage.py createsuperuser
+#https://simpleisbetterthancomplex.com/tutorial/2016/07/26/how-to-reset-migrations.html
+
+## Push Heroku ...
+$ git add .
+$ git commit -am "make it better"
+$ git push heroku master
+
+# Criar Banco de dados Heroku ...
+heroku addons:create heroku-postgresql:hobby-dev
+
+
+
 #### How to create a Django project
 mkdir django-quick-start && cd $_
 python3 -m venv venv
@@ -7,10 +33,12 @@ django-admin startproject django_quick_start .
 django-admin startapp my_first_app
 
 
-
+### Remove package ubuntu Linux
 sudo apt-get remove “package-name”
 
-https://simpleisbetterthancomplex.com/tutorial/2016/07/26/how-to-reset-migrations.html
+
+
+
 --Migracao....
 python3 manage.py makemigrations
 python3 manage.py migrate
@@ -18,7 +46,6 @@ python3 manage.py migrate
 --Reset Banco de Dados:
 . Corrija alteração no banco de Dados ...
 . Delete Migrations .....
-python3 manage.py makemisgrations
 python manage.py migrate --fake-initial
 
 python3 manage.py collectstatic
@@ -35,7 +62,7 @@ pip3 install django-crispy-forms
 pip3 install dj-database-url
 pip3 install django-widget-tweaks
 
-pip3 freeze > requirements.txt
+
 
 ### Django ###
 # *.log
@@ -45,18 +72,7 @@ pip3 freeze > requirements.txt
 # local_settings.py
 
 
-# migrar dados local para Heroku ...
-PGUSER=root PGPASSWORD=root heroku pg:push postgres://localhost/blog  postgresql-trapezoidal-56012
 
-
-heroku addons:create heroku-postgresql:hobby-dev
-
-heroku run python manage.py migrate
-heroku run python manage.py createsuperuser
-
-git add --all .
-git commit -m "My Django Girls app, first commit"
-git push -u origin master
 
 .pythonanywhere.com/pages/API
 8ca824aaabbb6daf1408b9f74914abb3ea8b52cd
