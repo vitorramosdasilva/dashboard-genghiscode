@@ -44,6 +44,7 @@ class UserRegistrationForm(forms.ModelForm):
 
     def clean_email(self):
        email = self.cleaned_data.get('email')
+       cd = self.cleaned_data
        if User.objects.filter(email=email).exists():
             raise forms.ValidationError('E-mail Exists.')
        return cd['email']
