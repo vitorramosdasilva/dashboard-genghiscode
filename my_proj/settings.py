@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'q@hjlgs&_(s#z(7)4ibpm%0%3zs%31-)*mvyxh2_lt(9ftnx@3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'dashboard',
     'accounts',
     'crispy_forms',
-    'widget_tweaks',
+    # 'widget_tweaks',
 
    
 ]

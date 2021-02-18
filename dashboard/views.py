@@ -64,8 +64,8 @@ def funcao_total_cpc(request):
         q &= Q(campanha__nome_campanha__in=listCampanha)
     if filtro_id_tipo_campanha and str(filtro_id_tipo_campanha) != 'Selecione':
         q &= Q(campanha__tipoCampanha=filtro_id_tipo_campanha)
-    if not q :
-        q &= Q ( campanha__nome_campanha__contains='Banpara' )
+    if not q:
+        q &= Q(campanha__nome_campanha__contains='Banpara')
 
     data = {
         'data': Discagem.objects.filter(classificacao__in=['CPC', 'ACORDO']).filter(q).aggregate(cpc=Sum(filtro_visao))
@@ -380,3 +380,19 @@ def discagem_maquinas_unic(request):
 
 class SobreView(TemplateView):
     template_name = "sobre.html"
+
+
+def error_400(request, exception):
+    return render(request, '400.html', status=400)
+
+
+def error_403(request, exception):
+    return render(request, '403.html', status=403)
+
+
+def error_404(request, exception):
+    return render(request, '404.html', status=404)
+
+
+def error_50x(request, exception):
+    return render(request, '500.html', status=500)
