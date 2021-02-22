@@ -1,4 +1,4 @@
-  $("#form_login").validate({
+   $("#form_login").validate({
       rules : {
             username: {
 					required: true,
@@ -57,7 +57,7 @@
                     maxlength:"A senha deve ter no máximo 15 caracteres"
              },
              password2:{
-                    required:"A senha não pode ficar em branco",
+                    required:"Repetir a senha não pode ficar em branco",
                     minlength:"A senha deve ter pelo menos 5 caracteres",
                     maxlength:"A senha deve ter no máximo 15 caracteres"
              }

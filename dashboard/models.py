@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
+from model_mommy.recipe import Recipe, foreign_key
 
 
 class Operacao(models.Model):
