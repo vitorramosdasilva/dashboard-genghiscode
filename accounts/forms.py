@@ -22,11 +22,6 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput
 )
 
-
-
-# query = CharField(widget=forms.TextInput(attrs={'placeholder':'Search..'}),
-#                   max_length=50, label='', required=False)
-
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Senha', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repita a senha', widget=forms.PasswordInput)
@@ -48,15 +43,3 @@ class UserRegistrationForm(forms.ModelForm):
        if User.objects.filter(email=email).exists():
             raise forms.ValidationError('E-mail Exists.')
        return cd['email']
-
-
-# class UserEditForm(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ('first_name', 'last_name', 'email')
-#
-#
-# class ProfileEditForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = ('date_of_birth', 'photo')
