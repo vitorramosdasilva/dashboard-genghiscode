@@ -15,7 +15,7 @@ urlpatterns = [
 
 handler50x = 'dashboard.views.error_500'
 handler404 = 'dashboard.views.error_404'
-# handler403 = 'dashboard.views.error_403'
-# handler400 = 'dashboard.views.error_400'
+handler403 = 'dashboard.views.error_403'
+handler400 = 'dashboard.views.error_400'
 
 
