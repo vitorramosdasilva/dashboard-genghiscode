@@ -33,11 +33,12 @@ Erro Migrate ....
 8 # Messagem erro cadastro - registre -se .. (feito)
 10 # grafico pizza funil... .. (feito)
 11 # Email exists error não poder gravar...
-12 # primeiro request venha seleciona a primeira operacao (feito) ...
-13 - nova branch hgit hub
-14 - deploy heroku ..
 
-15 - Migration accounts.0002_auto_20210204_0007 dependencies reference nonexistent parent node ('auth', '0013_remove_user_following'
-erro widget twiks
+12 # primeiro request venha seleciona a primeira operacao ...
 
-
+13 - nova branch hgit hub (feito)
+14 - deploy heroku .. (feito)
+15 - Pagina Erro ... (feito)
+16 - Testes ... (feito)
+17 - remover security keys settings e adicionar heroku
+18 -  send email zoho
