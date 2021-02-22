@@ -144,22 +144,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'dashboard:index'
 LOGOUT_REDIRECT_URL = 'dashboard:index'
 
-
-# Zoho Email Settings ...
-# EMAIL_HOST = 'smtp.zoho.com'
-# EMAIL_HOST_USER = 'contato@genghiscode.com.br'
-# EMAIL_HOST_PASSWORD = 'kurRrqPEcmpN'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = 'webmaster@localhost'
-
-# Settings Send Mail Reset Password ...
-# -----------------------------------
-# EMAIL_HOST = "localhost"
-# EMAIL_PORT = 1025
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
