@@ -12,6 +12,7 @@ PGUSER=root PGPASSWORD=root heroku pg:push postgres://localhost/call_center  pos
 heroku run python manage.py makemigrations
 heroku run python manage.py migrate
 heroku run python manage.py createsuperuser
+
 #https://simpleisbetterthancomplex.com/tutorial/2016/07/26/how-to-reset-migrations.html
 
 ## Push Heroku ...
@@ -21,8 +22,6 @@ $ git push heroku master
 
 # Criar Banco de dados Heroku ...
 heroku addons:create heroku-postgresql:hobby-dev
-
-
 
 #### How to create a Django project
 mkdir django-quick-start && cd $_
@@ -35,9 +34,6 @@ django-admin startapp my_first_app
 
 ### Remove package ubuntu Linux
 sudo apt-get remove “package-name”
-
-
-
 
 --Migracao....
 python3 manage.py makemigrations
