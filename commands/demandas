@@ -39,5 +39,6 @@ Erro Migrate ....
 13 - nova branch hgit hub (feito)
 14 - deploy heroku .. (feito)
 15 - Pagina Erro ... (feito)
-17 - tirar cod da aplicacao do settings..
-16 - Testes ...
+16 - Testes ... (feito)
+17 - remover security keys settings e adicionar heroku
+18 -  send email zoho
