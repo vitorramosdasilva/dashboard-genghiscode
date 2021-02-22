@@ -11,7 +11,6 @@ urlpatterns = [
 
     # url campanha right dashboard set in context ...
     path('campanha/', views.Campanha, name='campanha'),
-    # path('tipo-campanha/', views.funcao_tipo_campanha, name='tipo-campanha'),
 
     path('total-alo/', views.funcao_total_alo, name='total-alo'),
     path('total-cpc/', views.funcao_total_cpc, name='total-cpc'),
@@ -25,8 +24,5 @@ urlpatterns = [
     path('discagem-tentativas/', views.discagem_tentativas, name='discagem-tentativas'),
     path('discagem-acordos/', views.discagem_acordos, name='discagem-acordos'),
     path('classificacao-unicas/', views.discagem_classificacao_unicas, name='classificacao-unicas'),
-    path('discagem-maquinas-tentativas/', views.discagem_maquinas_tentativas, name='discagem-maquinas-tentativas'),
     path('discagem-maquinas-unic/', views.discagem_maquinas_unic, name='discagem-maquinas-unic'),
-
-
 ]

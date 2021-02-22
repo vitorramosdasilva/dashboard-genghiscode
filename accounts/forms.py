@@ -40,18 +40,7 @@ class UserRegistrationForm(forms.ModelForm):
     def clean_email(self):
        cd = self.cleaned_data
        email = self.cleaned_data.get('email')
+       cd = self.cleaned_data
        if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Um usuário com esse email já existe, recupere a senha')
        return cd['email']
-
-
-# class UserEditForm(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ('first_name', 'last_name', 'email')
-#
-#
-# class ProfileEditForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = ('date_of_birth', 'photo')
