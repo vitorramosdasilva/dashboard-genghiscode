@@ -140,8 +140,13 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'dashboard:index'
 LOGOUT_REDIRECT_URL = 'dashboard:index'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
