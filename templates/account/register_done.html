@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="m-5 pb-5 mh-100">
-  <h1>Bem Vindo  {{ new_user.first_name }} </h1>
+  <h1>Bem Vindo  {{ user.get_username }} </h1>
   <p>Sua conta esta criado com sucesso. Agora você pode acessar em <a href="{% url 'login' %}">Entrar</a>.</p>
 </div>
 <div class="m-5 pb-5 mh-100"></div>
