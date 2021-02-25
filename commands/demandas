@@ -40,4 +40,5 @@ Erro Migrate ....
 15 - Pagina Erro ... (feito)
 16 - Testes ... (feito)
 17 - remover security keys settings e adicionar heroku
-18 -  send email zoho (naO funciona versao free heroku)
+18 -  send email zoho (feito)
+19 -  correção do corpo do email html de envio de email (feito)
